@@ -1,0 +1,121 @@
+---
+import { businessInfo } from '../../data/business';
+import { primaryNavigation } from '../../data/navigation';
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner container">
+    <div class="site-footer__brand">
+      <span class="site-footer__wordmark">{businessInfo.name}</span>
+      <p>Institut de beauté · {businessInfo.city}</p>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Navigation de pied de page">
+      <ul>
+        {primaryNavigation.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <ul class="site-footer__links">
+      {businessInfo.planityUrl && (
+        <li>
+          <a href={businessInfo.planityUrl} target="_blank" rel="noopener noreferrer">Planity</a>
+        </li>
+      )}
+      {businessInfo.instagramUrl && (
+        <li>
+          <a href={businessInfo.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a>
+        </li>
+      )}
+    </ul>
+
+    <details class="site-footer__legal">
+      <summary>Mentions légales &amp; confidentialité</summary>
+      <div>
+        <p>
+          Cette page est une maquette technique et commerciale. Aucune mention
+          légale définitive n'est encore renseignée : raison sociale, SIRET,
+          directeur de publication, hébergeur et politique de confidentialité
+          seront ajoutés avant toute publication réelle.
+        </p>
+      </div>
+    </details>
+
+    <p class="site-footer__disclaimer">
+      Maquette de démonstration non officielle — contenus et informations à
+      valider avec Beauty Laï avant publication.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    --color-focus: var(--color-champagne);
+    background: var(--color-ink);
+    color: var(--color-ivory);
+    padding-block: var(--space-7);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .site-footer__wordmark {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.4rem;
+  }
+
+  .site-footer__brand p {
+    color: #c9c0ba;
+    margin-block-start: var(--space-1);
+  }
+
+  .site-footer__nav ul,
+  .site-footer__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .site-footer__nav a,
+  .site-footer__links a {
+    text-decoration: none;
+    color: var(--color-ivory);
+  }
+
+  .site-footer__nav a:hover,
+  .site-footer__nav a:focus-visible,
+  .site-footer__links a:hover,
+  .site-footer__links a:focus-visible {
+    color: var(--color-champagne);
+  }
+
+  .site-footer__legal summary {
+    cursor: pointer;
+    font-weight: 700;
+    min-height: var(--tap-target-min);
+    display: flex;
+    align-items: center;
+  }
+
+  .site-footer__legal div {
+    color: #c9c0ba;
+    max-width: 40rem;
+    margin-block-start: var(--space-2);
+    font-size: 0.9rem;
+  }
+
+  .site-footer__disclaimer {
+    font-size: 0.8rem;
+    color: #a89f99;
+    border-top: 1px solid #3a332f;
+    padding-block-start: var(--space-4);
+  }
+</style>

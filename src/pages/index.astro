@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/astro/SiteHeader.astro';
+import Hero from '../components/astro/Hero.astro';
+import InstitutSection from '../components/astro/InstitutSection.astro';
+import PrestationsSection from '../components/astro/PrestationsSection.astro';
+import PlanityBanner from '../components/astro/PlanityBanner.astro';
+import ExperienceSection from '../components/astro/ExperienceSection.astro';
+import PricingSection from '../components/astro/PricingSection.astro';
+import AvisSection from '../components/astro/AvisSection.astro';
+import NousTrouverSection from '../components/astro/NousTrouverSection.astro';
+import SiteFooter from '../components/astro/SiteFooter.astro';
+---
+
+<BaseLayout
+  title="Beauty Laï | Institut de beauté à Amiens — Réservation Planity"
+  description="Beauty Laï, institut de beauté à Amiens : regard, onglerie, visage, cheveux, bien-être et événements. Réservation sur Planity."
+>
+  <SiteHeader slot="header" />
+
+  <Hero />
+  <InstitutSection />
+  <PrestationsSection />
+  <PlanityBanner />
+  <ExperienceSection />
+  <PricingSection />
+  <AvisSection />
+  <NousTrouverSection />
+
+  <SiteFooter slot="footer" />
+</BaseLayout>

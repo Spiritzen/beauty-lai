@@ -1,0 +1,51 @@
+---
+import { businessInfo } from '../../data/business';
+---
+
+<section class="planity-banner section--dark">
+  <div class="planity-banner__inner container">
+    <div>
+      <h2>Votre prochain rendez-vous, simplement.</h2>
+      <p>Les créneaux, prestations et tarifs à jour sont disponibles directement sur Planity.</p>
+    </div>
+    <a
+      class="button button--on-dark"
+      href={businessInfo.planityUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Choisir mon créneau
+    </a>
+  </div>
+</section>
+
+<style>
+  .planity-banner {
+    padding-block: var(--space-7);
+  }
+
+  .planity-banner__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    align-items: flex-start;
+  }
+
+  .planity-banner h2 {
+    font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem);
+    margin-block-end: var(--space-2);
+  }
+
+  .planity-banner p {
+    color: var(--color-text-secondary);
+    max-width: 34rem;
+  }
+
+  @media (min-width: 48rem) {
+    .planity-banner__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+</style>

@@ -1,0 +1,54 @@
+/**
+ * Design tokens Beauty Laï.
+ * Palette éditoriale sobre : encre profonde, ivoire chaud, nude poudré,
+ * argile rosée, champagne mat en accent uniquement.
+ */
+:root {
+  color-scheme: only light;
+
+  /* Couleurs de marque */
+  --color-ink: #191514;
+  --color-ivory: #f7f1ea;
+  --color-nude: #e5c8b8;
+  --color-clay: #c98f82;
+  --color-champagne: #b9965b;
+  --color-white: #ffffff;
+  --color-text-secondary: #655b56;
+
+  /* Rôles sémantiques (fond clair par défaut) */
+  --color-bg: var(--color-ivory);
+  --color-bg-alt: var(--color-white);
+  --color-text: var(--color-ink);
+  --color-border: var(--color-nude);
+  --color-focus: var(--color-ink);
+  --color-accent: var(--color-champagne);
+
+  /* Typographie */
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-size-base: 1rem;
+  --line-height-base: 1.6;
+  --line-height-tight: 1.15;
+
+  /* Espacements */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4.5rem;
+  --space-8: 6rem;
+
+  /* Mise en page */
+  --content-max-width: 72rem;
+  --content-padding-inline: clamp(1.25rem, 4vw, 3rem);
+
+  /* Cibles interactives */
+  --tap-target-min: 44px;
+
+  /* Effets */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.75rem;
+  --shadow-soft: 0 12px 32px -16px rgba(25, 21, 20, 0.35);
+}

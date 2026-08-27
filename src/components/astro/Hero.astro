@@ -1,0 +1,179 @@
+---
+import { Picture } from 'astro:assets';
+import heroImage from '../../assets/images/beauty-lai-hero-regard.png';
+import { businessInfo } from '../../data/business';
+import { reviewSummary } from '../../data/reviews';
+---
+
+<section class="hero">
+  <div class="hero__inner container">
+    <div class="hero__content">
+      <p class="eyebrow">Institut de beauté · {businessInfo.city}</p>
+      <h1 class="hero__title">Votre beauté. Votre rythme. Votre moment.</h1>
+      <p class="hero__text">
+        Des gestes précis, une écoute attentive et des prestations pensées pour
+        révéler ce qui vous ressemble.
+      </p>
+      <div class="hero__actions">
+        <a
+          class="button button--primary"
+          href={businessInfo.planityUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Prendre rendez-vous
+        </a>
+        <a class="button button--secondary" href="#prestations">
+          Découvrir les prestations
+        </a>
+      </div>
+      <p class="hero__proof">
+        {reviewSummary.rating}/{reviewSummary.maxRating} sur {reviewSummary.source} · {reviewSummary.reviewCount} avis
+      </p>
+    </div>
+
+    <div class="hero__visual">
+      <div class="hero__frame">
+        <Picture
+          src={heroImage}
+          alt="Visuel éditorial de démonstration associé à Beauty Laï, institut de beauté à Amiens"
+          formats={['avif', 'webp']}
+          fallbackFormat="png"
+          widths={[450, 675, 900]}
+          sizes="(min-width: 61rem) 22rem, 90vw"
+          width={900}
+          height={1125}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="hero__photo"
+        />
+        <span class="hero__monogram" aria-hidden="true">BL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--space-7) var(--space-8);
+    background: linear-gradient(180deg, var(--color-white) 0%, var(--color-ivory) 100%);
+    overflow: hidden;
+  }
+
+  .hero__inner {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  .hero__title {
+    font-size: clamp(2.25rem, 5vw + 1rem, 3.75rem);
+    margin-block: var(--space-3);
+  }
+
+  .hero__text {
+    max-width: 34rem;
+    color: var(--color-text-secondary);
+    font-size: 1.05rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block-start: var(--space-5);
+  }
+
+  .hero__proof {
+    margin-block-start: var(--space-4);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+  }
+
+  .hero__visual {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 22rem);
+    aspect-ratio: 4 / 5;
+  }
+
+  .hero__frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--color-clay);
+    border-radius: var(--radius-md);
+    background: var(--color-nude);
+    overflow: hidden;
+    animation: hero-fade-in 0.6s ease both;
+  }
+
+  .hero__frame::after {
+    content: '';
+    position: absolute;
+    inset: var(--space-3);
+    border: 1px solid var(--color-champagne);
+    border-radius: var(--radius-sm);
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .hero__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 18%;
+    border-radius: var(--radius-md);
+  }
+
+  .hero__monogram {
+    position: absolute;
+    left: calc(-1 * var(--space-4));
+    bottom: calc(-1 * var(--space-4));
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background: var(--color-ivory);
+    border: 1px solid var(--color-champagne);
+    box-shadow: var(--shadow-soft);
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--color-ink);
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes hero-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__frame {
+      animation: none;
+    }
+  }
+
+  @media (min-width: 61rem) {
+    .hero__inner {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .hero__photo {
+      object-position: 55% 22%;
+    }
+  }
+</style>

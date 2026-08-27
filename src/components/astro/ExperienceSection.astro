@@ -1,0 +1,75 @@
+---
+const steps = [
+  { title: 'Échanger', text: "Un temps d'écoute pour comprendre vos attentes." },
+  { title: 'Personnaliser', text: 'Une prestation adaptée à votre visage et votre rythme.' },
+  { title: 'Sublimer', text: 'Un geste précis pour révéler ce qui vous ressemble.' },
+];
+---
+
+<section id="experience" class="experience">
+  <div class="experience__inner container">
+    <p class="eyebrow">L'expérience</p>
+    <h2>Plus qu'une prestation, une parenthèse.</h2>
+
+    <ol class="experience__steps">
+      {steps.map((step, index) => (
+        <li>
+          <span class="experience__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <span class="experience__step-title">{step.title}</span>
+          <p>{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .experience {
+    padding-block: var(--space-8);
+    background: var(--color-white);
+  }
+
+  .experience h2 {
+    font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem);
+    max-width: 30rem;
+    margin-block-start: 0;
+  }
+
+  .experience__steps {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .experience__steps li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-block-start: var(--space-3);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .experience__index {
+    font-family: var(--font-serif);
+    color: var(--color-clay);
+    font-size: 1.5rem;
+  }
+
+  .experience__step-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.3rem;
+  }
+
+  .experience__steps p {
+    color: var(--color-text-secondary);
+  }
+
+  @media (min-width: 48rem) {
+    .experience__steps {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

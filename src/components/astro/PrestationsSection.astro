@@ -1,0 +1,156 @@
+---
+import { Picture } from 'astro:assets';
+import regardImage from '../../assets/images/beauty-lai-soin-du-regard.png';
+import visageImage from '../../assets/images/beauty-lai-soin-du-visage.png';
+import ongleriImage from '../../assets/images/beauty-lai-onglerie-geste.png';
+import bienEtreImage from '../../assets/images/beauty-lai-bien-etre-soin-mains.png';
+import cheveuxImage from '../../assets/images/beauty-lai-extension-capillaire.png';
+import evenementsImage from '../../assets/images/beauty-lai-maquillage-mariee.png';
+import { serviceCategories } from '../../data/services';
+
+const serviceImages: Record<string, typeof ongleriImage> = {
+  regard: regardImage,
+  onglerie: ongleriImage,
+  visage: visageImage,
+  'bien-etre': bienEtreImage,
+  cheveux: cheveuxImage,
+  evenements: evenementsImage,
+};
+
+// Alt vide par défaut : le contenu est déjà exprimé par le titre et le
+// résumé juste à côté de la carte. Alt descriptif uniquement là où
+// demandé explicitement.
+const serviceImageAlts: Record<string, string> = {
+  regard: 'Soin professionnel des cils dans un institut de beauté',
+  visage: "Application d'un soin du visage au pinceau",
+  evenements: "Maquillage professionnel d'une mariée en institut de beauté",
+};
+---
+
+<section id="prestations" class="prestations">
+  <div class="prestations__inner container">
+    <div class="prestations__intro">
+      <p class="eyebrow">Prestations</p>
+      <h2>Des prestations pensées autour de vous.</h2>
+    </div>
+
+    <ul class="prestations__grid">
+      {serviceCategories.map((service) => {
+        const image = serviceImages[service.slug];
+        const imageAlt = serviceImageAlts[service.slug] ?? '';
+        return (
+          <li class="prestations__card">
+            {image && (
+              <div class="prestations__photo">
+                <Picture
+                  src={image}
+                  alt={imageAlt}
+                  formats={['avif', 'webp']}
+                  fallbackFormat="png"
+                  widths={[320, 480, 640]}
+                  sizes="(min-width: 61rem) 20rem, 90vw"
+                  width={640}
+                  height={480}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <h3>{service.name}</h3>
+            <p>{service.summary}</p>
+            {service.bookingUrl && (
+              <a
+                class="prestations__link"
+                href={service.bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Voir les disponibilités
+              </a>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .prestations {
+    padding-block: var(--space-8);
+    background: var(--color-ivory);
+  }
+
+  .prestations__intro h2 {
+    font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem);
+    max-width: 30rem;
+    margin-block-start: 0;
+  }
+
+  .prestations__grid {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .prestations__card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: var(--space-2);
+  }
+
+  .prestations__photo {
+    margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-5)) var(--space-2);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+  }
+
+  .prestations__photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .prestations__card h3 {
+    font-size: 1.3rem;
+  }
+
+  .prestations__card p {
+    color: var(--color-text-secondary);
+  }
+
+  .prestations__link {
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--color-ink);
+    border-bottom: 1px solid var(--color-champagne);
+    align-self: start;
+    margin-top: auto;
+  }
+
+  .prestations__link:hover,
+  .prestations__link:focus-visible {
+    color: var(--color-clay);
+  }
+
+  @media (min-width: 40rem) {
+    .prestations__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 61rem) {
+    .prestations__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

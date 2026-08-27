@@ -1,0 +1,232 @@
+---
+import { Picture } from 'astro:assets';
+import interieurPrincipal from '../../assets/images/beauty-lai-interieur-principal.webp';
+import espaceAccueil from '../../assets/images/beauty-lai-espace-accueil.webp';
+import cabineSoins from '../../assets/images/beauty-lai-cabine-soins.webp';
+import logoSource from '../../assets/images/beauty-lai-logo-source.webp';
+
+const commitments = [
+  { title: 'Écoute', text: "Un temps d'échange avant chaque prestation." },
+  { title: 'Précision', text: 'Des gestes maîtrisés, sans précipitation.' },
+  { title: 'Bien-être', text: 'Une parenthèse pensée pour vous.' },
+];
+---
+
+<section id="institut" class="institut">
+  <div class="institut__inner container">
+    <div class="institut__intro">
+      <p class="eyebrow">Un moment pour vous</p>
+      <h2 class="institut__title">La précision du geste, la douceur de l'attention.</h2>
+
+      <div class="institut__signature">
+        <Picture
+          src={logoSource}
+          alt="Logo Beauty Laï — Institut Beauté"
+          formats={['avif', 'webp']}
+          fallbackFormat="webp"
+          widths={[230, 260]}
+          sizes="(min-width: 61rem) 260px, 200px"
+          width={773}
+          height={460}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+    <div class="institut__body">
+      <p>
+        Chez Beauty Laï, chaque rendez-vous commence par une écoute réelle de vos
+        envies avant tout geste technique.
+      </p>
+      <p>
+        L'équipe prend le temps d'adapter chaque prestation à votre visage, votre
+        peau et votre rythme, pour un résultat qui vous ressemble.
+      </p>
+      <ul class="institut__commitments">
+        {commitments.map((commitment) => (
+          <li>
+            <span class="institut__commitment-title">{commitment.title}</span>
+            <span>{commitment.text}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="institut__gallery container">
+    <div class="institut__gallery-main">
+      <Picture
+        src={interieurPrincipal}
+        alt="Intérieur principal de l'institut Beauty Laï à Amiens"
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        widths={[380, 570, 773]}
+        sizes="(min-width: 61rem) 45rem, 100vw"
+        width={773}
+        height={460}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="institut__gallery-side">
+      <Picture
+        src={espaceAccueil}
+        alt="Espace d'accueil de l'institut Beauty Laï"
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        widths={[260, 380, 530]}
+        sizes="(min-width: 61rem) 20rem, (min-width: 22rem) 45vw, 100vw"
+        width={773}
+        height={460}
+        loading="lazy"
+        decoding="async"
+      />
+      <Picture
+        src={cabineSoins}
+        alt="Cabine de soins de l'institut Beauty Laï"
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        widths={[260, 380, 530]}
+        sizes="(min-width: 61rem) 20rem, (min-width: 22rem) 45vw, 100vw"
+        width={772}
+        height={459}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .institut {
+    padding-block: var(--space-8);
+    background: var(--color-white);
+  }
+
+  .institut__inner {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .institut__title {
+    font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem);
+    margin-block-start: 0;
+    max-width: 28rem;
+  }
+
+  .institut__body p {
+    color: var(--color-text-secondary);
+    max-width: 38rem;
+    margin-block-end: var(--space-3);
+  }
+
+  .institut__commitments {
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .institut__commitments li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding-block-start: var(--space-3);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .institut__commitment-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.15rem;
+  }
+
+  /* Signature de marque : sobre, séparée de la galerie, jamais dominante. */
+  .institut__signature {
+    margin-block-start: var(--space-5);
+    display: inline-block;
+    width: min(200px, 100%);
+    background: var(--color-ivory);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2);
+  }
+
+  .institut__signature :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .institut__gallery {
+    margin-block-start: var(--space-7);
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .institut__gallery-main,
+  .institut__gallery-side :global(picture) {
+    display: block;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .institut__gallery-main :global(img),
+  .institut__gallery-side :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .institut__gallery-main {
+    aspect-ratio: 773 / 460;
+  }
+
+  .institut__gallery-side {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+
+  .institut__gallery-side :global(picture) {
+    aspect-ratio: 773 / 460;
+  }
+
+  @media (max-width: 21.99rem) {
+    .institut__gallery-side {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .institut__commitments {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 61rem) {
+    .institut__inner {
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: start;
+    }
+
+    .institut__signature {
+      width: 260px;
+    }
+
+    .institut__gallery {
+      grid-template-columns: 2fr 1fr;
+      align-items: stretch;
+    }
+
+    .institut__gallery-side {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+  }
+</style>

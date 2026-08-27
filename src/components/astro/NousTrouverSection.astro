@@ -1,0 +1,93 @@
+---
+import { businessInfo } from '../../data/business';
+import { openingHours } from '../../data/hours';
+
+const mapsQuery = encodeURIComponent(businessInfo.address ?? `${businessInfo.name} ${businessInfo.city}`);
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+---
+
+<section id="nous-trouver" class="nous-trouver section--dark">
+  <div class="nous-trouver__inner container">
+    <div>
+      <p class="eyebrow">Nous trouver</p>
+      <h2>{businessInfo.name}, au cœur d'Amiens.</h2>
+      {businessInfo.address && <p class="nous-trouver__address">{businessInfo.address}</p>}
+
+      <ul class="nous-trouver__hours">
+        {openingHours.periods.map((period) => (
+          <li>
+            <span>{period.days}</span>
+            <span>{period.hours}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="nous-trouver__actions">
+      <a class="button button--on-dark" href={mapsUrl} target="_blank" rel="noopener noreferrer">
+        Préparer mon itinéraire
+      </a>
+      {businessInfo.instagramUrl && (
+        <a class="button button--secondary" href={businessInfo.instagramUrl} target="_blank" rel="noopener noreferrer">
+          Suivre sur Instagram
+        </a>
+      )}
+      {businessInfo.planityUrl && (
+        <a class="button button--secondary" href={businessInfo.planityUrl} target="_blank" rel="noopener noreferrer">
+          Réserver sur Planity
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .nous-trouver {
+    padding-block: var(--space-8);
+  }
+
+  .nous-trouver__inner {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .nous-trouver h2 {
+    font-size: clamp(1.75rem, 3vw + 1rem, 2.25rem);
+    margin-block: var(--space-2);
+    max-width: 24rem;
+  }
+
+  .nous-trouver__address {
+    color: var(--color-text-secondary);
+  }
+
+  .nous-trouver__hours {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+    max-width: 20rem;
+  }
+
+  .nous-trouver__hours li {
+    display: flex;
+    justify-content: space-between;
+    padding-block: var(--space-1);
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.9rem;
+  }
+
+  .nous-trouver__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+
+  @media (min-width: 48rem) {
+    .nous-trouver__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

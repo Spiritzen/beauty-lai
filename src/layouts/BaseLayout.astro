@@ -1,0 +1,50 @@
+---
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import { buildAbsoluteUrl } from '../data/site';
+import { buildBeautySalonJsonLd } from '../data/jsonld';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+// Omis tant qu'aucune URL publique n'est configurée (voir src/data/site.ts) :
+// jamais localhost, jamais un domaine inventé.
+const canonicalUrl = buildAbsoluteUrl(Astro.url.pathname);
+const jsonLd = buildBeautySalonJsonLd();
+
+// Préfixe robuste pour les ressources de public/ : reste correct que le
+// site soit servi à la racine ("/") ou sous un sous-chemin GitHub Pages
+// ("/beauty-lai/"), sans jamais produire de double slash.
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href={`${basePath}/favicon.svg`} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="fr_FR" />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline></script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <slot name="header" />
+    <main id="main-content">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

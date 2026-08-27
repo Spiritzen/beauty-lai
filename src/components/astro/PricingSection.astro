@@ -1,0 +1,346 @@
+---
+import { businessInfo } from '../../data/business';
+import {
+  PHONE_BOOKING_NUMBER,
+  formatDuration,
+  formatPriceLabel,
+  pricingCategories,
+} from '../../data/pricing';
+
+const phoneHref = `tel:${PHONE_BOOKING_NUMBER.replace(/\s+/g, '')}`;
+---
+
+<section id="tarifs" class="tarifs">
+  <div class="tarifs__inner container">
+    <div class="tarifs__intro">
+      <p class="eyebrow">La carte beauté</p>
+      <h2>Tous vos soins, en toute clarté.</h2>
+      <p class="tarifs__text">
+        Du regard aux ongles, d'un moment de détente à une mise en beauté complète : découvrez
+        les prestations Beauty Laï et choisissez celle qui vous ressemble.
+      </p>
+      <a
+        class="button button--primary"
+        href={businessInfo.planityUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Voir les disponibilités sur Planity
+      </a>
+    </div>
+
+    <div class="tarifs__list">
+      {pricingCategories.map((category) => {
+        const hasPhoneItem = category.items.some((item) => item.bookingMode === 'phone');
+        return (
+          <details class="pricing-category">
+            <summary class="pricing-category__summary">
+              <span class="pricing-category__heading">
+                <span class="pricing-category__name">{category.name}</span>
+                <span class="pricing-category__count">
+                  {category.items.length} prestation{category.items.length > 1 ? 's' : ''}
+                </span>
+              </span>
+              <span class="pricing-category__chevron" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
+                  <path
+                    d="M4 6l4 4 4-4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </summary>
+
+            <div class="pricing-category__body">
+              {category.description && (
+                <p class="pricing-category__description">{category.description}</p>
+              )}
+              {category.notice && <p class="pricing-category__notice">{category.notice}</p>}
+
+              <ul class="pricing-category__items">
+                {category.items.map((item) => {
+                  const isInfo = item.durationMinutes === undefined && item.priceCents === undefined;
+                  const priceLabel = formatPriceLabel(item);
+                  return (
+                    <li class:list={['pricing-item', { 'pricing-item--info': isInfo }]}>
+                      <div class="pricing-item__main">
+                        <p class="pricing-item__name">{item.name}</p>
+                        {item.description && (
+                          <p class="pricing-item__meta">{item.description}</p>
+                        )}
+                        {item.note && <p class="pricing-item__meta">{item.note}</p>}
+                        {item.bookingMode === 'phone' && (
+                          <p class="pricing-item__phone-tag">Réservation par téléphone</p>
+                        )}
+                      </div>
+                      {item.durationMinutes !== undefined && (
+                        <p class="pricing-item__duration">{formatDuration(item.durationMinutes)}</p>
+                      )}
+                      {priceLabel && <p class="pricing-item__price">{priceLabel}</p>}
+                    </li>
+                  );
+                })}
+              </ul>
+
+              {hasPhoneItem && (
+                <p class="pricing-category__phone-number">
+                  Réservation par téléphone :{' '}
+                  <a href={phoneHref}>{PHONE_BOOKING_NUMBER}</a>
+                </p>
+              )}
+            </div>
+          </details>
+        );
+      })}
+    </div>
+
+    <div class="tarifs__footer">
+      <a
+        class="button button--secondary"
+        href={businessInfo.planityUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Réserver sur Planity
+      </a>
+      <p class="tarifs__note">
+        Tarifs susceptibles d'évoluer. Les tarifs et disponibilités confirmés sur Planity font foi.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tarifs {
+    padding-block: var(--space-8);
+    background: var(--color-ivory);
+  }
+
+  .tarifs__intro {
+    max-width: 40rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .tarifs__intro h2 {
+    font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem);
+    margin-block-start: 0;
+  }
+
+  .tarifs__text {
+    color: var(--color-text-secondary);
+    margin-block: var(--space-3) var(--space-5);
+  }
+
+  .tarifs__list {
+    margin-block-start: var(--space-6);
+    max-width: 48rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .pricing-category {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+  }
+
+  .pricing-category__summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 44px;
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .pricing-category__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .pricing-category__summary:hover .pricing-category__name,
+  .pricing-category__summary:focus-visible .pricing-category__name {
+    color: var(--color-clay);
+  }
+
+  .pricing-category__heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--space-3);
+    row-gap: var(--space-1);
+  }
+
+  .pricing-category__name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.2rem;
+    transition: color 0.15s ease;
+  }
+
+  .pricing-category__count {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+  }
+
+  .pricing-category__chevron {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-champagne);
+    transition: transform 0.2s ease;
+  }
+
+  .pricing-category[open] > .pricing-category__summary .pricing-category__chevron {
+    transform: rotate(180deg);
+  }
+
+  .pricing-category__body {
+    padding: 0 var(--space-5) var(--space-5);
+    border-top: 1px solid var(--color-border);
+    padding-block-start: var(--space-4);
+  }
+
+  .pricing-category__description,
+  .pricing-category__notice {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    margin-block-end: var(--space-4);
+  }
+
+  .pricing-category__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pricing-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: var(--space-3);
+    row-gap: var(--space-1);
+    align-items: start;
+    padding-block: var(--space-3);
+  }
+
+  .pricing-item + .pricing-item {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .pricing-item--info {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-item__main {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  .pricing-item__name {
+    font-weight: 600;
+  }
+
+  .pricing-item__meta {
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    margin-block-start: var(--space-1);
+  }
+
+  .pricing-item__phone-tag {
+    color: var(--color-clay);
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-block-start: var(--space-1);
+  }
+
+  .pricing-item__duration {
+    grid-column: 1;
+    grid-row: 2;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+  }
+
+  .pricing-item--info .pricing-item__duration {
+    display: none;
+  }
+
+  .pricing-item__price {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    text-align: right;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .pricing-category__phone-number {
+    margin-block-start: var(--space-4);
+    padding-block-start: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  .pricing-category__phone-number a {
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+
+  .tarifs__footer {
+    margin-block-start: var(--space-7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    text-align: center;
+  }
+
+  .tarifs__note {
+    max-width: 34rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pricing-category__chevron {
+      transition: none;
+    }
+    .pricing-category__name {
+      transition: none;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .pricing-item {
+      grid-template-columns: 1fr 6rem 7rem;
+    }
+
+    .pricing-item--info {
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-item__duration {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: start;
+    }
+
+    .pricing-item__price {
+      grid-column: 3;
+      grid-row: 1;
+      align-self: start;
+    }
+  }
+</style>

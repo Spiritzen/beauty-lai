@@ -1,0 +1,142 @@
+---
+import { reviewSummary } from '../../data/reviews';
+
+const starIndices = [0, 1, 2, 3, 4];
+---
+
+<section id="avis" class="avis">
+  <div class="avis__inner container">
+    <p class="eyebrow">Avis</p>
+    <h2>La confiance de nos client·e·s.</h2>
+
+    <div class="avis__score">
+      <span class="avis__stars" aria-hidden="true">
+        {starIndices.map((i) => (
+          <span class="avis__star" style={`--star-index: ${i}`}>★</span>
+        ))}
+      </span>
+      <p class="avis__text">
+        <strong>{reviewSummary.rating}/{reviewSummary.maxRating} sur {reviewSummary.source}</strong>
+        — {reviewSummary.reviewCount} avis
+      </p>
+    </div>
+
+    {reviewSummary.url && (
+      <a class="avis__link" href={reviewSummary.url} target="_blank" rel="noopener noreferrer">
+        Consulter les avis sur Planity
+      </a>
+    )}
+  </div>
+</section>
+
+<style>
+  .avis {
+    padding-block: var(--space-8);
+    background: var(--color-ivory);
+    text-align: center;
+  }
+
+  .avis h2 {
+    font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem);
+    margin-block-start: 0;
+  }
+
+  .avis__score {
+    margin-block: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .avis__stars {
+    color: var(--color-champagne);
+    font-size: 1.75rem;
+    letter-spacing: 0.15em;
+  }
+
+  .avis__star {
+    display: inline-block;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Posée par le script uniquement une fois le JS et l'observer prêts :
+     évite que les étoiles restent invisibles si le JS ne s'exécute pas. */
+  .avis__stars--pending .avis__star {
+    opacity: 0;
+  }
+
+  .avis__stars--visible .avis__star {
+    animation: avis-star-pop 450ms ease-out both;
+    animation-delay: calc(var(--star-index) * 120ms);
+  }
+
+  @keyframes avis-star-pop {
+    0% {
+      opacity: 0;
+      transform: scale(1);
+    }
+    40% {
+      opacity: 1;
+      transform: scale(1.5);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .avis__stars--pending .avis__star,
+    .avis__stars--visible .avis__star {
+      animation: none;
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .avis__text {
+    color: var(--color-text-secondary);
+  }
+
+  .avis__link {
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--color-ink);
+    border-bottom: 1px solid var(--color-champagne);
+  }
+
+  .avis__link:hover,
+  .avis__link:focus-visible {
+    color: var(--color-clay);
+  }
+</style>
+
+<script>
+  // Révèle les étoiles une seule fois lorsqu'elles deviennent visibles au
+  // scroll. N'ajoute la classe "pending" (qui les masque) qu'une fois le
+  // script exécuté et l'observer prêt : sans JS, les étoiles restent
+  // visibles en statique. Respecte prefers-reduced-motion.
+  const starsEl = document.querySelector<HTMLElement>('.avis__stars');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (starsEl && !prefersReducedMotion && 'IntersectionObserver' in window) {
+    starsEl.classList.add('avis__stars--pending');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            starsEl.classList.remove('avis__stars--pending');
+            starsEl.classList.add('avis__stars--visible');
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.3 },
+    );
+
+    observer.observe(starsEl);
+  }
+</script>
