@@ -15,7 +15,7 @@
     "test:watch": "vitest",
     "verify": "npm run typecheck && npm run test && npm run build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist --dotfiles"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.4",
