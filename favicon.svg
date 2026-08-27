@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Beauty Laï">
+  <rect width="64" height="64" rx="14" fill="#F7F1EA" />
+  <text
+    x="32"
+    y="34"
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="30"
+    font-weight="600"
+    letter-spacing="0.5"
+    fill="#191514"
+  >BL</text>
+  <style>
+    @media (prefers-color-scheme: dark) {
+      rect { fill: #191514; }
+      text { fill: #F7F1EA; }
+    }
+  </style>
+</svg>
