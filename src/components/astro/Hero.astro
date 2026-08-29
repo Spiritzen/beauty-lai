@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import heroImage from '../../assets/images/beauty-lai-hero-regard.png';
+import heroImage from '../../assets/images/patronne.jpg';
 import { businessInfo } from '../../data/business';
 import { reviewSummary } from '../../data/reviews';
 ---
@@ -36,9 +36,8 @@ import { reviewSummary } from '../../data/reviews';
       <div class="hero__frame">
         <Picture
           src={heroImage}
-          alt="Visuel éditorial de démonstration associé à Beauty Laï, institut de beauté à Amiens"
+          alt={`Portrait de la responsable de Beauty Laï dans son institut de beauté à ${businessInfo.city}`}
           formats={['avif', 'webp']}
-          fallbackFormat="png"
           widths={[450, 675, 900]}
           sizes="(min-width: 61rem) 22rem, 90vw"
           width={900}
@@ -127,7 +126,7 @@ import { reviewSummary } from '../../data/reviews';
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 18%;
+    object-position: 54% 20%;
     border-radius: var(--radius-md);
   }
 
@@ -173,7 +172,7 @@ import { reviewSummary } from '../../data/reviews';
     }
 
     .hero__photo {
-      object-position: 55% 22%;
+      object-position: 56% 18%;
     }
   }
 </style>
